@@ -1,59 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Line Plot with Logging</title>
-<!-- Include Plotly.js -->
-<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-<link rel="stylesheet" href="../static/css/styles.css">
-
-<style>
-  .dataPanel {
-    float: right; /* Align panel to the right */
-    width: calc(33.33% - 20px); /* One-third of the page width minus 20px for margin */
-    margin-left: 20px; /* Add margin between the graph and the panel */
-    padding: 10px;
-    border: 1px solid #444444; /* Dark border */
-    background-color: #121212; /* Dark background */
-    color: #ffffff; /* White text */
-    font-family: Arial, sans-serif; /* Font style */
-  }
-
-  .sectionTitle {
-    font-size: 18px; /* Title font size */
-    margin-bottom: 10px; /* Add space below the title */
-  }
-
-  .dataSection {
-    margin-bottom: 10px; /* Add space below each data section */
-  }
-
-  .dataText {
-    font-size: 14px; /* Text font size */
-    line-height: 1.5; /* Line height for better readability */
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Control Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
 <body>
-<div id="plot"></div>
-<div class="dataPanel">
-  <div class="sectionTitle">TLE</div>
-  <div class="dataSection">
-    <div class="dataText">Line 1 of TLE</div>
-    <div class="dataText">Line 2 of TLE</div>
-  </div>
-  <div class="sectionTitle">IMU Data</div>
-  <div class="dataSection">
-    <div class="dataText">IMU Data Line</div>
-  </div>
+<div class="container-fluid p-5">
+    <h1 class="text-center mb-5 text-light">Mission Control Dashboard</h1>
+    <div class="row">
+        <div class="col-lg-8 mb-4">
+            <div id="plot" class="bg-dark rounded-lg"></div>
+        </div>
+        <div class="col-lg-4">
+            <div class="dataPanel bg-dark text-light p-3 rounded-lg">
+                <h2 class="sectionTitle">TLE</h2>
+                <p class="dataText">Line 1 of TLE</p>
+                <p class="dataText">Line 2 of TLE</p>
+                <h2 class="sectionTitle">IMU Data</h2>
+                <p class="dataText">IMU Data Line</p>
+            </div>
+        </div>
+    </div>
+    <div id="logPanel" class="bg-dark text-light p-3 rounded-lg mt-4">
+        <h2 class="sectionTitle">Log Panel</h2>
+        <div id="log" class="overflow-auto" style="max-height: 200px;"></div>
+    </div>
+    <input type="text" id="messageInput" class="form-control mt-4" placeholder="Type a message and press Enter">
 </div>
-
-<div id="logPanel">
-  <div id="log"></div>
-</div>
-<input type="text" id="messageInput" placeholder="Type a message and press Enter">
-
 <script>
 // Data for the line plot
 const data = [

@@ -1,40 +1,30 @@
 body {
-    background-color: #080808; /* Dark background */
-    color: #ffffff; /* White text */
-    font-family: Arial, sans-serif; /* Font style */
-  }
-  
-  #plot {
-    width: calc(33.33% - 20px); /* One-third of the page width minus 20px for margin */
-    margin-bottom: 20px; /* Add space below the plot */
-    border: 1px solid #444444; /* Dark border */
-    background-color: #00101f; /* Dark blue background for plot (spacey theme) */
-  }
-  
-  #logPanel {
-    width: calc(66.66% - 20px); /* Two-thirds of the page width minus 20px for margin */
-    height: 200px;
-    overflow-y: auto;
-    border: 1px solid #444444; /* Dark border */
-    padding: 10px;
-    background-color: #121212; /* Dark background for log panel */
-  }
-  
-  #log {
-    font-size: 14px; /* Font size for logs */
-  }
-  
-  input[type="text"] {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #444444; /* Dark border for input field */
-    background-color: #121212; /* Dark background for input field */
-    color: #ffffff; /* White text */
-    font-family: Arial, sans-serif; /* Font style */
-  }
-  
-  input[type="text"]:focus {
-    outline: none; /* Remove focus outline */
-    border-color: #0066cc; /* Accent color for focus state */
-  }
-  
+  background-color: #080808; /* Slightly updated dark background */
+}
+
+.dataPanel, #logPanel {
+  border: 1px solid #444444; /* Maintain a dark border */
+  background-color: #121212; /* Dark background */
+}
+
+.sectionTitle {
+  color: #4CAF50; /* Bright green for a techy, futuristic feel */
+}
+
+.dataText {
+  color: #f8f9fa; /* Soft white for readability */
+}
+
+#plot, .dataPanel, #logPanel, #messageInput {
+  border: 1px solid #0056b3; /* Bright blue border for a futuristic touch */
+}
+
+#plot {
+  height: 500px;
+}
+
+#messageInput {
+  border-color: #0056b3; /* Ensure input field matches theme */
+  background-color: #000; /* Dark background for input */
+  color: #fff; /* White text color for contrast */
+}
