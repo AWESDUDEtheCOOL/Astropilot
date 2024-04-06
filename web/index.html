@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Line Plot with Logging</title>
+<!-- Include Plotly.js -->
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+<style>
+  .dataPanel {
+    float: right; /* Align panel to the right */
+    width: calc(33.33% - 20px); /* One-third of the page width minus 20px for margin */
+    margin-left: 20px; /* Add margin between the graph and the panel */
+    padding: 10px;
+    border: 1px solid #444444; /* Dark border */
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* White text */
+    font-family: Arial, sans-serif; /* Font style */
+  }
+
+  .sectionTitle {
+    font-size: 18px; /* Title font size */
+    margin-bottom: 10px; /* Add space below the title */
+  }
+
+  .dataSection {
+    margin-bottom: 10px; /* Add space below each data section */
+  }
+
+  .dataText {
+    font-size: 14px; /* Text font size */
+    line-height: 1.5; /* Line height for better readability */
+  }
+</style>
+</head>
+<body>
+<div id="plot"></div>
+<div class="dataPanel">
+  <div class="sectionTitle">TLE</div>
+  <div class="dataSection">
+    <div class="dataText">Line 1 of TLE</div>
+    <div class="dataText">Line 2 of TLE</div>
+  </div>
+  <div class="sectionTitle">IMU Data</div>
+  <div class="dataSection">
+    <div class="dataText">IMU Data Line</div>
+  </div>
+</div>
+
+<div id="logPanel">
+  <div id="log"></div>
+</div>
+<input type="text" id="messageInput" placeholder="Type a message and press Enter">
+
+<script>
+// Data for the line plot
+const data = [
+  { x: [1, 2, 3, 4, 5], y: [10, 15, 13, 17, 10], type: 'scatter', mode: 'lines', name: 'Line 1' },
+  { x: [1, 2, 3, 4, 5], y: [16, 5, 11, 9, 15], type: 'scatter', mode: 'lines', name: 'Line 2' }
+];
+
+// Layout for the line plot
+const layout = {
+  title: '2-Axis Line Plot',
+  xaxis: { title: 'X-axis' },
+  yaxis: { title: 'Y-axis' }
+};
+
+// Create the line plot
+Plotly.newPlot('plot', data, layout);
+
+// Function to log the current time and message
+function logTime(message) {
+  const now = new Date();
+  const timeString = now.toLocaleTimeString();
+  const logElement = document.getElementById('log');
+  if (logElement.innerHTML !== '') {
+    logElement.innerHTML += '<br>';
+  }
+  logElement.innerHTML += `${timeString}: ${message}`;
+}
+
+// Log the time every 5 seconds
+setInterval(function() {
+  const now = new Date();
+  const timeString = now.toLocaleTimeString();
+  logTime(`Automatic log at ${timeString}`);
+}, 5000);
+
+// Log the time when a message is entered
+document.getElementById('messageInput').addEventListener('keyup', function(event) {
+  if (event.key === 'Enter') {
+    const message = this.value.trim();
+    if (message !== '') {
+      logTime(message);
+      this.value = ''; // Clear the input field
+    }
+  }
+});
+</script>
+</body>
+</html>
