@@ -1,48 +1,55 @@
 from resemble import Resemble
-import urllib.request
 import os
+from twilio.rest import Client
+from dotenv import dotenv_values
 
-PROJECT_UUID = 'b7e7278f'
-VOICE_UUID = 'b2d1bb75'
 
-def alert(title, body):
+def alert(title, body, phone_number):
     '''
     Create an alert with the given title and body
     Parameters:
         title (str): The title of the audio clip
         body (str): The text of the audio clip
-    Returns:
-        clip_name (str): The name of the audio clip created
+        phone_number (str): The phone number to call
     '''
-    Resemble.api_key('s0GLLI9cOhTOq8qMdFH3gQtt') 
+    env_vars = dotenv_values(".env")
+    resemble_api_key = env_vars['RESEMBLE_API_KEY']
+    project_uuid = env_vars['RESEMBLE_PROJECT_UUID']
+    voice_uuid = env_vars['RESEMBLE_VOICE_UUID']
+    Resemble.api_key(resemble_api_key) 
     response = Resemble.v2.clips.create_sync(
-        PROJECT_UUID,
-        VOICE_UUID,
+        project_uuid,
+        voice_uuid,
         body,
         title,
         sample_rate=44100,
-        output_format="wav",
+        output_format="mp3",
         include_timestamps=True)
 
     clip_uuid = response['item']['uuid']
 
-    response = Resemble.v2.clips.get(PROJECT_UUID, clip_uuid)
+    response = Resemble.v2.clips.get(project_uuid, clip_uuid)
     clip_url = response['item']['audio_src']
-    clip_name = clip_url.split('/')[-1]
-    urllib.request.urlretrieve(clip_url, f'Clips/{clip_name}')
-    return clip_name
+    
+    account_sid = env_vars['TWILIO_ACCOUNT_SID']
+    auth_token = env_vars['TWILIO_AUTH_TOKEN']
+    client = Client(account_sid, auth_token)
+    client.calls.create(
+                        twiml=f'<Response><Play>{clip_url}</Play></Response>',
+                        to=phone_number,
+                        from_='+15595499599'
+                    )
+    return
 
 def alert_clear():
     '''
     Delete all clips in the project and all files in the 'Clips' directory
     '''
-    Resemble.api_key('s0GLLI9cOhTOq8qMdFH3gQtt') 
-    page_size = 10
+    env_vars = dotenv_values(".env")
+    resemble_api_key = env_vars['RESEMBLE_API_KEY']
+    project_uuid = env_vars['RESEMBLE_PROJECT_UUID']
+    Resemble.api_key(resemble_api_key)
     
     # Get all UUIDs and delete clips
-    for item in Resemble.v2.clips.all(PROJECT_UUID, page=1, page_size=page_size).get('items', []):
-        Resemble.v2.clips.delete(PROJECT_UUID, item['uuid'])
-    
-    # Delete all files in 'Clips' directory
-    for filename in os.listdir('Clips'):
-        os.unlink(os.path.join('Clips', filename))
+    for item in Resemble.v2.clips.all(project_uuid, 1, 10).get('items', []):
+        Resemble.v2.clips.delete(project_uuid, item['uuid'])
