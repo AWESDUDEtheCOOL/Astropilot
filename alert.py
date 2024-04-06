@@ -1,0 +1,39 @@
+from resemble import Resemble
+import urllib.request
+import os
+
+PROJECT_UUID = 'b7e7278f'
+VOICE_UUID = 'b2d1bb75'
+
+def alert(title, body):
+    Resemble.api_key('s0GLLI9cOhTOq8qMdFH3gQtt') 
+    response = Resemble.v2.clips.create_sync(
+        PROJECT_UUID,
+        VOICE_UUID,
+        body,
+        title,
+        sample_rate=44100,
+        output_format="wav",
+        include_timestamps=True)
+
+    clip_uuid = response['item']['uuid']
+
+    response = Resemble.v2.clips.get(PROJECT_UUID, clip_uuid)
+    clip_url = response['item']['audio_src']
+    clip_name = clip_url.split('/')[-1]
+    urllib.request.urlretrieve(clip_url, f'Clips/{clip_name}')
+    return
+
+def alert_clear():
+    Resemble.api_key('s0GLLI9cOhTOq8qMdFH3gQtt') 
+    page_size = 10
+    
+    # Get all UUIDs and delete clips
+    for item in Resemble.v2.clips.all(PROJECT_UUID, page=1, page_size=page_size).get('items', []):
+        Resemble.v2.clips.delete(PROJECT_UUID, item['uuid'])
+    
+    # Delete all files in 'Clips' directory
+    for filename in os.listdir('Clips'):
+        os.unlink(os.path.join('Clips', filename))
+
+alert('Alert', 'This is an alert')
