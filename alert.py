@@ -6,6 +6,14 @@ PROJECT_UUID = 'b7e7278f'
 VOICE_UUID = 'b2d1bb75'
 
 def alert(title, body):
+    '''
+    Create an alert with the given title and body
+    Parameters:
+        title (str): The title of the audio clip
+        body (str): The text of the audio clip
+    Returns:
+        clip_name (str): The name of the audio clip created
+    '''
     Resemble.api_key('s0GLLI9cOhTOq8qMdFH3gQtt') 
     response = Resemble.v2.clips.create_sync(
         PROJECT_UUID,
@@ -22,9 +30,12 @@ def alert(title, body):
     clip_url = response['item']['audio_src']
     clip_name = clip_url.split('/')[-1]
     urllib.request.urlretrieve(clip_url, f'Clips/{clip_name}')
-    return
+    return clip_name
 
 def alert_clear():
+    '''
+    Delete all clips in the project and all files in the 'Clips' directory
+    '''
     Resemble.api_key('s0GLLI9cOhTOq8qMdFH3gQtt') 
     page_size = 10
     
@@ -35,5 +46,3 @@ def alert_clear():
     # Delete all files in 'Clips' directory
     for filename in os.listdir('Clips'):
         os.unlink(os.path.join('Clips', filename))
-
-alert('Alert', 'This is an alert')
