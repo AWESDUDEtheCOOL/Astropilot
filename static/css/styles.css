@@ -43,6 +43,11 @@ body {
 
 }
 
+.logo {
+  max-width: 150px; /* Adjust this value as needed */
+  margin: 0; /* Center the plot if smaller than the container */
+  height: auto;
+}
 
 
 #messageInput {
