@@ -20,16 +20,17 @@
         </div>
         <div class="col-lg-4">
             <div class="dataPanel bg-dark text-light p-3 rounded-lg">
-                <h2 class="sectionTitle">TLE</h2>
-                <p class="dataText">Line 1 of TLE</p>
-                <p class="dataText">Line 2 of TLE</p>
+                <h2 class="sectionTitle">Last Telemetry</h2>
+                <p class="dataText">SAPLING GIGANTEUM <br>
+                  1 56213U 23054AM  24016.71252701  .00043431  00000+0  12174-2 0  9990 <br>
+                  2 56213  97.3775 275.5254 0010323 340.6320  19.4530 15.36418809 42838</p>
                 <h2 class="sectionTitle">IMU Data</h2>
                 <p class="dataText">IMU Data Line</p>
             </div>
         </div>
     </div>
     <div id="logPanel" class="bg-dark text-light p-3 rounded-lg mt-4">
-        <h2 class="sectionTitle">Log Panel</h2>
+        <h2 class="sectionTitle">Log Updates Panel</h2>
         <div id="log" class="overflow-auto" style="max-height: 200px;"></div>
     </div>
     <form action="/alert" method="post">
@@ -41,16 +42,38 @@
 <script>
 // Data for the line plot
 const data = [
-  { x: [1, 2, 3, 4, 5], y: [10, 15, 13, 17, 10], type: 'scatter', mode: 'lines', name: 'Line 1' },
-  { x: [1, 2, 3, 4, 5], y: [16, 5, 11, 9, 15], type: 'scatter', mode: 'lines', name: 'Line 2' }
+  {
+    x: [1, 2, 3, 4, 5],
+    y: [16, 15.5, 15, 15.5, 16],
+    type: 'scatter',
+    mode: 'lines+markers', // Add markers to the line
+    name: 'Battery 1',
+    line: { color: '#17BECF', width: 3 }, // Customize line color and width
+    marker: { size: 8 } // Customize marker size
+  },
+  {
+    x: [1, 2, 3, 4, 5],
+    y: [16, 13, 11, 3, 0.5],
+    type: 'scatter',
+    mode: 'lines+markers', // Add markers to the line
+    name: 'Battery 2',
+    line: { color: '#7F7F7F', width: 3, dash: 'dot' }, // Dash type line
+    marker: { size: 8 } // Customize marker size
+  }
 ];
 
-// Layout for the line plot
 const layout = {
-  title: '2-Axis Line Plot',
-  xaxis: { title: 'X-axis' },
-  yaxis: { title: 'Y-axis' }
+  title: 'Battery Voltage',
+  xaxis: { title: 'Seconds' },
+  yaxis: { title: 'Volts' },
+  plot_bgcolor: "#080808", // Match the dashboard theme
+  paper_bgcolor: "#080808",
+  font: {
+    color: "#f8f9fa" // Text color for readability
+  },
+  grid: { roworder: 'bottom to top' }
 };
+
 
 // Create the line plot
 Plotly.newPlot('plot', data, layout);
