@@ -7,7 +7,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/styles.css') }}">
     <!-- Plotly.js -->
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 </head>
@@ -32,7 +32,11 @@
         <h2 class="sectionTitle">Log Panel</h2>
         <div id="log" class="overflow-auto" style="max-height: 200px;"></div>
     </div>
-    <input type="text" id="messageInput" class="form-control mt-4" placeholder="Type a message and press Enter">
+    <form action="/alert" method="post">
+        <input type="text" name="call_body" placeholder="Alert Message">
+        <input type="text" name="call_num" placeholder="Phone Number">
+        <input type="submit" value="Send alert">
+    </form>
 </div>
 <script>
 // Data for the line plot
