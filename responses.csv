@@ -1,0 +1,4 @@
+﻿Question,Answer,Priority Error
+"What is the error ""C-C01""","The error C-C01 refers to a critical communication timeout error.",Call
+"What if over time IMU temperature is decreasing?","If the IMU temperature is decreasing over time it could be due to several possible causes such as: Decreased activity or orientation changes of the satellite Improved cooling or airflow within the satellite Lower ambient temperature in the satellite's environment These factors can contribute to a gradual decrease in the IMU temperature.",Warning
+"Error D-L24 is obtained.","Error D-L24 indicates that the low priority data storage is nearing capacity.",Warning

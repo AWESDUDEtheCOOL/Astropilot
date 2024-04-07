@@ -1,32 +1,46 @@
 body {
   background-color: #080808; /* Slightly updated dark background */
+  border: none; /* Remove border */
+
 }
 
 .dataPanel, #logPanel {
   border: 1px solid #444444; /* Maintain a dark border */
   background-color: #121212; /* Dark background */
+  border: none; /* Remove border */
+
 }
 
 .sectionTitle {
   color: #4CAF50; /* Bright green for a techy, futuristic feel */
+  border: none; /* Remove border */
+
 }
 
 .dataText {
   color: #f8f9fa; /* Soft white for readability */
+  border: none; /* Remove border */
+
 }
 
 #plot, .dataPanel, #logPanel, #messageInput {
   border: 1px solid #0056b3; /* Bright blue border for a futuristic touch */
+  border: none; /* Remove border */
+
 }
 
 #plot {
   height: 500px; /* Adjust height as needed */
   width: auto; /* Ensure it scales properly */
   margin: auto; /* Center the plot if smaller than the container */
+  border: none; /* Remove border */
+
 }
 #plot:focus, #plot :focus {
     outline: none;
     border: 1px solid #f8f9fa; /* Example: Adding a subtle border instead */
+    border: none; /* Remove border */
+
 }
 
 
@@ -35,4 +49,16 @@ body {
   border-color: #0056b3; /* Ensure input field matches theme */
   background-color: #000; /* Dark background for input */
   color: #fff; /* White text color for contrast */
+  border: none; /* Remove border */
+}
+
+.errorBox {
+  background-color: #DB4C40; /* Red background color */
+  color: #fff; /* Red text color */
+  padding: 20px; /* Padding around the message */
+  margin-bottom: 20px; /* Bottom margin to separate from other content */
+  width: 100%; /* Span the entire width of the parent container */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  border-radius: 10px; /* Rounded corners */
+  border: none; /* Remove border */
 }
